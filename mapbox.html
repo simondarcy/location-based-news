@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title>Location base News with Mapbox</title>
+  <script src='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/leaflet.markercluster.js'></script>
+	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.css' rel='stylesheet' />
+	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.Default.css' rel='stylesheet' />
+
+  <style>
+    body { margin:0; padding:0; }
+    .map { position:absolute; top:0; bottom:0; width:100%; }
+    .leaflet-popup img{
+    	max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div id='map' class='map'> </div>
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoibWlndWVsY2FzdGlsbG8iLCJhIjoiY2owdXplbjZ6MDAzNDJxcWxxaXNheXlydiJ9.1KJCScyPPSP7micvFKqlDw';
+var map = L.mapbox.map('map', 'mapbox.streets');
+var myLayer = L.mapbox.featureLayer('exampleRTEmap').on('ready', function(e) {
+	    // The clusterGroup gets each marker in the group added to it
+	    // once loaded, and then is added to the map
+	    var clusterGroup = new L.MarkerClusterGroup();
+	    e.target.eachLayer(function(layer) {
+	        clusterGroup.addLayer(layer);
+	    });
+	    map.addLayer(clusterGroup);
+   })
+  .loadURL('//beta.rte.ie/rteapi/map/?rows=999')
+  .on('ready', function(layer) {    
+                this.eachLayer(function(marker) {
+                	console.log(layer.feature);
+                    marker.setIcon(L.mapbox.marker.icon({
+                        'marker-color': marker.feature.properties.marker.colorpin,
+                        'description': "book store"
+                    }));
+                    //when layer.feature is within the popup, it returns "undefined"
+                    marker.bindPopup( marker.feature.properties.bubble);
+                });
+    })
+
+</script>
+</body>
+</html>

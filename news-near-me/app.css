@@ -1,0 +1,23 @@
+*{}
+body{
+    margin:0; padding:0;
+}
+.container{
+    width: 100%;
+    margin: auto;
+}
+#demo{
+    padding: 0 1rem;
+}
+h2{
+    padding: 0 1rem;
+    font-family: "Montserrat",sans-serif;
+}
+p{
+    font-family: "Source Sans Pro", sans-serif;
+}
+a{
+    display: block;
+    color: #1176dd;
+    text-decoration: none;
+}
